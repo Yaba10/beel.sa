@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page de Connexion</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head><script src="script.js"></script>
+<body>
+    <div class="login-container">
+        <h1>Connexion</h1>
+        <form id="connexion-form">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required><br>
+            <button type="submit">Se connecter</button>
+        </form>
+        <p id="message"></p>
+    </div>
+    <script src="script.js"></script>
+	<script>
+		const connexionForm = document.getElementById('connexion-form');
+const messageElement = document.getElementById('message');
+
+connexionForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Ici, vous pourriez vérifier les informations de connexion par rapport à une base de données ou des données en mémoire
+    const validUsername = "utilisateur123";
+    const validPassword = "motdepasse123";
+
+    if (username === validUsername && password === validPassword) {
+        messageElement.textContent = "Connexion réussie !";
+        enregistrerLog(username, true);
+    } else {
+        messageElement.textContent = "Identifiants incorrects. Veuillez réessayer.";
+        enregistrerLog(username, false);
+    }
+});
+
+function enregistrerLog(username, success) {
+    // Envoi des données au serveur pour enregistrement
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "enregistrer.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    const logData = `username=${encodeURIComponent(username)}&success=${success}`;
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText); // Réponse du serveur
+        }
+    };
+    
+    xhr.send(logData);
+}
+
+	</script>
+
+	<style>
+		body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    padding: 30px;
+    width: 320px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 180px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+}
+
+.login-btn {
+    background-color: #3897f0;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #3578e5;
+}
+
+.message {
+    text-align: center;
+    color: #999;
+    margin-top: 10px;
+}
+
+.bottom-links {
+    margin-top: 20px;
+    text-align: center;
+    color: #999;
+}
+
+.bottom-links a {
+    color: #999;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.bottom-links a:hover {
+    text-decoration: underline;
+}
+
+	</style>
+	
+
+	
+</body>
+</html>
